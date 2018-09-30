@@ -1,20 +1,29 @@
-use std::path::Path;
+use std::io;
+use std::path::{Path};
 
-use iron::Iron;
-use mount::Mount;
-use staticfile::Static;
+use rocket::http::RawStr;
+use rocket::response::{NamedFile};
 
-pub trait Server {
-
+#[get("/")]
+fn index() -> io::Result<NamedFile> {
+    NamedFile::open("static/index.html")
 }
 
-impl Server {
-    pub fn new() {
-        let mut mount = Mount::new();
+#[get("/index.js")]
+fn files() -> Option<NamedFile> {
+    NamedFile::open(Path::new("static/index.js")).ok()
+}
 
-        mount.mount("/", Static::new(Path::new("static/index.html")));
-        mount.mount("/index.js", Static::new(Path::new("static/index.js")));
+#[get("/store/<hash>")]
+fn get(hash: &RawStr) -> Option<NamedFile> {
+    let home_dir = dirs::home_dir().unwrap();
+    NamedFile::open(Path::new(&home_dir).join(".arcjet").join(hash.as_str())).ok()
+}
 
-        Iron::new(mount).http("127.0.0.1:3000").unwrap();
-    }
+fn rocket() -> rocket::Rocket {
+    rocket::ignite().mount("/", routes![index, files, get])
+}
+
+pub fn new() {
+    rocket().launch();
 }

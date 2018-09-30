@@ -1,10 +1,13 @@
+#![feature(plugin, decl_macro, proc_macro_non_items)]
+#![plugin(rocket_codegen)]
+
+#[macro_use]
+extern crate rocket;
 extern crate chrono;
-extern crate iron;
-extern crate mount;
 extern crate serde;
 extern crate serde_derive;
 extern crate serde_json;
-extern crate staticfile;
+extern crate dirs;
 
 // mod store;
 
@@ -12,9 +15,7 @@ extern crate staticfile;
 
 mod server;
 
-use server::Server;
-
 fn main() {
     println!("Serving on port 3000");
-    Server::new();
+    server::new();
 }
