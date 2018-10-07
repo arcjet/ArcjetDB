@@ -4,10 +4,12 @@
 #[macro_use]
 extern crate rocket;
 extern crate chrono;
+extern crate dirs;
 extern crate serde;
 extern crate serde_derive;
 extern crate serde_json;
-extern crate dirs;
+extern crate sha2;
+extern crate uuid;
 
 // mod store;
 
