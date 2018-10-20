@@ -5,6 +5,7 @@
 extern crate rocket;
 extern crate chrono;
 extern crate dirs;
+extern crate hex;
 extern crate serde;
 extern crate serde_derive;
 extern crate serde_json;

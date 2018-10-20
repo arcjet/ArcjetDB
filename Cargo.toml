@@ -12,4 +12,5 @@ rocket = { git = "https://github.com/SergioBenitez/Rocket" }
 rocket_codegen = { git = "https://github.com/SergioBenitez/Rocket" }
 dirs = "1.0"
 sha2 = "0.8.0"
-uuid = "0.7"
+uuid = { version = "0.7", features = ["v4"] }
+hex = "0.3.2"
