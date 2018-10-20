@@ -3,7 +3,7 @@ use std::{fs, io};
 
 use rocket::http::RawStr;
 use rocket::request::FromFormValue;
-use rocket::response::NamedFile;
+use rocket::response::{status, NamedFile};
 use rocket::Data;
 use sha2::{Digest, Sha512};
 use uuid::Uuid;
@@ -75,10 +75,8 @@ fn set(data: Data) -> String {
 }
 
 #[post("/index")]
-fn index() -> Option<NamedFile> {
-    let home_dir = dirs::home_dir().unwrap();
-    let tmp_file = Uuid::new_v4();
-    NamedFile::open(get_path(tmp_file.to_string())).ok()
+fn index() -> status::Created {
+    let index = get_path("index.db");
 }
 
 fn rocket() -> rocket::Rocket {
